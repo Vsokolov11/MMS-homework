@@ -1,0 +1,4 @@
+за намиране и извеждане на най-голямото число от numbers.txt :
+sort -rn numbers.txt|head -n1
+за намиране и извеждане на най-малкото число от numbers.txt :
+sort -n numbers.txt|head -n1
