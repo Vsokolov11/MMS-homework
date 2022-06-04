@@ -30,7 +30,7 @@ int main(){
             res = a/b;
             break;
         default:
-            printf("No such operation\n");
+            fprintf(stderr, "No such operation\n");
             break;
         } 
         printf("%.2f\n", res);

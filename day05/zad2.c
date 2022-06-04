@@ -14,7 +14,8 @@ int main(){
             break;
         }
         if(a <= 0 || b <= 0 || c <= 0){
-            printf("Invalid input!\n");
+            fprintf(stderr, "Invalid input!\n");
+            return -1;
         }
         else{
             triangle(a,b,c,&S,&P);
@@ -27,4 +28,5 @@ int triangle(double a, double b, double c, double* S, double* P){
     *P = a+b+c;
     double p = *P/2;
     *S = sqrt(p*(p - a)*(p - b)*(p - c));
+    return 0;
 }
