@@ -52,7 +52,7 @@ int main(void)
         }
         else if (option == 4)
         {
-            printf("Abscent are: ");
+            printf("Absent are: ");
             for(int bit = 15; bit >= 0; bit--){
                 //printf("%d", (attendance&(1<<bit))>>bit);
                 int temp = !!(attendance&(1<<bit));
