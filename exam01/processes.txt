@@ -1,0 +1,9 @@
+    PID TTY          TIME CMD
+    983 tty2     00:00:00 gnome-session-b
+  14296 pts/0    00:00:00 ps
+    PID TTY          TIME CMD
+    983 tty2     00:00:00 gnome-session-b
+  15004 pts/0    00:00:00 ps
+    PID TTY          TIME CMD
+    983 tty2     00:00:00 gnome-session-b
+  15023 pts/0    00:00:00 ps

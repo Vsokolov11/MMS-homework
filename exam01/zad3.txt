@@ -1,0 +1,17 @@
+3.1
+За преброяване на броя на процесите: 
+pc -a >> processes.txt
+wc -l  processes.txt
+
+3.2 
+mkdir MMS\ C\ camp
+cp *.c /MMS\ C\ camp
+rm *[0-9]
+
+3.3
+111 101 100
+chmod 754 testFile
+
+3.4 
+
+cat source1.c source2.c|wc -l
