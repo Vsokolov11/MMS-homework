@@ -10,7 +10,7 @@ int main(){
     //printf("The count of the ones int the masks : %d\n", bitsNCount(15234, 1200, 450, 190));
     flipOddBits(&mask);
     //mirrorBits(&mask);
-    printf("\n");
+    printf("%lu\n", mask);
 }
 
 unsigned bitsNCount(uint64_t mask1, uint32_t mask2, uint16_t mask3, uint8_t mask4){
@@ -57,7 +57,6 @@ void flipOddBits(uint64_t* mask){
         {
             *mask ^= (uint64_t)1<<bit;
         }
-        printf("%lu", (*mask&(1<<bit))>>bit);
     }
 }
 void mirrorBits(uint16_t* mask){
