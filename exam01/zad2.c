@@ -6,10 +6,10 @@ void flipOddBits(uint64_t*);
 void mirrorBits(uint16_t* mask);
 
 int main(){
-    uint64_t mask = 1;
+    uint16_t mask = 1;
     //printf("The count of the ones int the masks : %d\n", bitsNCount(15234, 1200, 450, 190));
-    flipOddBits(&mask);
-    //mirrorBits(&mask);
+    //flipOddBits(&mask);
+    mirrorBits(&mask);
     printf("\n");
 }
 
