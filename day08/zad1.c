@@ -5,18 +5,27 @@ int strleng(char*);
 int strnleng(char*, size_t);
 void strcopy(char*, const char*);
 void strncopy(char*, const char*, int);
-void strcat(char*, const char*);
+void strgcat(char*, const char*);
+void strgncat(char*, const char*,int);
 
 int main(){
-    char b[35] = "abcdefghijklmn";
-    char a[40] = "Pseudopseudohypoparathyroidism";
+    char b[31] = "abcde";
+    char a[31] = "second string";
+    char c[31] = "string to concat";
+    printf("Copied: %s\n", a);
     printf("%d\n", strleng(a));
-    printf("%d\n", strnleng(a, 15));
-    printf("%s\n", a);
+    printf("%d\n", strnleng(a, 8));
+    printf("String A before strcopy: %s\n", a);
     strcopy(a,b);
-    printf("%s\n", a);
-    strncopy(a,b,5);
-    printf("%s\n", a);
+    printf("String A after strcopy: %s\n", a);
+    strncopy(a,b,3);
+    printf("String A after strncopy(3): %s\n", a);
+    strgcat(a,c);
+    printf("String A after concat: %s\n", a);
+    strcopy(a,b);
+    printf("String A after strcopy: %s\n", a);
+    strgncat(a,c, 6);
+    printf("String A after N concat: %s\n", a);
     return 0;
 }
 
@@ -64,11 +73,33 @@ void strncopy(char* dest, const char* src, int n){
     }
     dest[i] = '\0';
 }
-void strcat(char* str1, const char* str2){
+void strgcat(char* str1, const char* str2){
     int i = 0;
+    int j = 0;
     while (str1[i] != '\0')
     {
-        /* code */
+        i++;
     }
-    
+    while (str2[j]!='\0')
+    {
+        str1[i]=str2[j];
+        i++;
+        j++;
+    }
+    str1[i] = '\0';
+}
+void strgncat(char* str1, const char* str2, int n){
+    int i = 0;
+    int j = 0;
+    while (str1[i] != '\0')
+    {
+        i++;
+    }
+    while (j != n)
+    {
+        str1[i]=str2[j];
+        i++;
+        j++;
+    }
+    str1[i] = '\0';
 }
