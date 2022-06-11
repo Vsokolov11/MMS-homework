@@ -18,5 +18,6 @@ int main(){
         printf("%d ", nums[i]);
     }
     putchar('\n');
+    
     return 0;
 }
