@@ -7,6 +7,8 @@ unsigned bitsNCount(unsigned count, unsigned bitscnt, ...);
 
 int main(){
     printf("%d\n",bitsNCount(5,1,1,2,4,9,17));
+
+    return 0;
 }
 
 unsigned bitsNCount(unsigned count, unsigned bitscnt, ...){

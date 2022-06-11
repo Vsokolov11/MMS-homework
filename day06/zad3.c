@@ -25,6 +25,7 @@ int main(){
     printValue(&d, TFLOAT);
     printValue(&e, TDOUBLE);
 
+    return 0;
 }
 void printValue(const void* valuePtr, uint8_t flag){
     switch (flag)

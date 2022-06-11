@@ -67,4 +67,6 @@ double root(double num){
 int main(){
     printf("%d\n", introot(36));
     printf("%.3lf\n", root(37));
+
+    return 0;
 }

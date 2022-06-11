@@ -12,6 +12,8 @@ int main(){
     putchar('\n');
     qsort(arr, 5,sizeof(int), comp);
     printf("The second largest number is: %d\n", arr[1]);
+
+    return 0;
     
 }
 

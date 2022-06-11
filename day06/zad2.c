@@ -7,6 +7,8 @@ double sine(double);
 int main(){
     //printf("%lf, %d", power(2,3), factorial(6));
     printf("%lf", sine(20));
+
+    return 0;
 }
 
 double power(double a,int x){

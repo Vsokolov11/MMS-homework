@@ -9,6 +9,8 @@ void arrayEvaluate(int* arr, size_t n, int(*f)(int*,int));
 int main(){
     int arr[5] = {10,3,6,12,7};
     arrayEvaluate(arr, 5, sumArr);
+
+    return 0;
 }
 
 
