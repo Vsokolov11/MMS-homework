@@ -7,11 +7,16 @@ void strcopy(char*, const char*);
 void strncopy(char*, const char*, int);
 void strgcat(char*, const char*);
 void strgncat(char*, const char*,int);
+int strgcmp(const char*, const char*);
+int strgncmp(const char*, const char*, int);
+
+
 
 int main(){
     char b[31] = "abcde";
     char a[31] = "second string";
     char c[31] = "string to concat";
+    char d[31] = "string to concas";
     printf("Copied: %s\n", a);
     printf("%d\n", strleng(a));
     printf("%d\n", strnleng(a, 8));
@@ -26,8 +31,12 @@ int main(){
     printf("String A after strcopy: %s\n", a);
     strgncat(a,c, 6);
     printf("String A after N concat: %s\n", a);
+    printf("C and D compared: %d\n", strgcmp(c, d));
+    printf("C and D compared to N: %d\n", strgncmp(c, d, 8));
     return 0;
 }
+
+
 
 int strleng(char* c){
     int count = 0;
@@ -102,4 +111,21 @@ void strgncat(char* str1, const char* str2, int n){
         j++;
     }
     str1[i] = '\0';
+}
+int strgcmp(const char* str1, const char* str2){
+    int i = 0;
+    while(str1[i] == str2[i]){
+        i++;
+    }
+    return str1[i]-str2[i];
+}
+int strgncmp(const char* str1, const char* str2, int n){
+    int i = 0;
+    while(str1[i] == str2[i]){
+        i++;
+        if(i==n){
+            break;
+        }
+    }
+    return str1[i]-str2[i];
 }
