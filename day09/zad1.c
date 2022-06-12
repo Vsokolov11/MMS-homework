@@ -23,6 +23,12 @@ int compareAuthorASC(const void*,const void*);
 int compareAuthorDESC(const void*,const void*);
 int compareTitleASC(const void*,const void*);
 int compareTitleDESC(const void*,const void*);
+int comparePagesASC(const void* bp1, const void* bp2);
+int comparePagesDESC(const void* bp1, const void* bp2);
+int comparePriceASC(const void* bp1, const void* bp2);
+int comparePriceDESC(const void* bp1, const void* bp2);
+
+void *linearSearch(const void *, const void *, size_t, size_t, int (*compar)(const void *, const void *));
 
 
 //MAIN
@@ -33,30 +39,52 @@ int main(){
         compareAuthorASC,
         compareAuthorDESC,
         compareTitleASC,
-        compareTitleDESC
+        compareTitleDESC,
+        comparePagesASC,
+        comparePagesDESC,
+        comparePriceASC,
+        comparePriceDESC
     };
-    int opt = 0;
+    int opt = 7;
 
-    for (int i = 0; i < COUNT; i++)
-    {
+    for (int i = 0; i < COUNT - 1; i++){
 
         randomTitle(books[i].title);
         randomName(books[i].author);
         books[i].pages = randint(50, 800);
         books[i].price = randint(5,100);
-
-        
     }
-    
+
+    Book b1 = {
+        .author = "William Golding",
+        .title = "Lord of the flies",
+        .price = 10,
+        .pages = 350,
+        
+    };
+    books[COUNT - 1] = b1;
     qsort(books, COUNT, sizeof(Book), compf[opt]);
+
     
-
-
 
     for (int i = 0; i < COUNT; i++)
     {
         printBook(&books[i]);
     }
+    
+    Book key = {.author="William",.title="Lord of the flies", .price = 10, .pages = 350};
+
+    Book *element = linearSearch(&key, books, COUNT,  sizeof(*books), comparePriceDESC);
+
+    if(!element){
+        printf("Not found...\n");
+    }
+    else{
+        printf("\nThe book you are seearching for: \n\n");
+        printBook(element);
+        putchar('\n');
+    }
+
     return 0;
 }
 
@@ -95,10 +123,10 @@ int randint(int min, int max){
 
 
 void printBook(Book *b){
-    printf(" Title: %25s ", b->title);
-    printf(" Author: %25s ", b->author);
-    printf(" Pages: %4u ", b->pages);
-    printf(" Price: %4.2lf \n", b->price);
+    printf("Title:%25s ", b->title);
+    printf("Author:%25s ", b->author);
+    printf("Pages:%4u ", b->pages);
+    printf("Price:%4.2lf \n", b->price);
 }
 int compareAuthorASC(const void* bp1, const void* bp2){
     Book* b1 = (Book*)bp1;
@@ -122,4 +150,34 @@ int compareTitleDESC(const void* bp1, const void* bp2){
     Book* b2 = (Book*)bp2;
     return strcmp(b2->title, b1->title
     );
+}
+int comparePagesASC(const void* bp1, const void* bp2){
+    Book* b1 = (Book*)bp1;
+    Book* b2 = (Book*)bp2;
+    return b1->pages-b2->pages;
+}
+
+int comparePagesDESC(const void* bp1, const void* bp2){
+    Book* b1 = (Book*)bp1;
+    Book* b2 = (Book*)bp2;
+    return b2->pages-b1->pages;
+}
+int comparePriceASC(const void* bp1, const void* bp2){
+    Book* b1 = (Book*)bp1;
+    Book* b2 = (Book*)bp2;
+    return b1->price-b2->price;
+}
+
+int comparePriceDESC(const void* bp1, const void* bp2){
+    Book* b1 = (Book*)bp1;
+    Book* b2 = (Book*)bp2;
+    return b2->price-b1->price;
+}
+void *linearSearch(const void *key, const void *base, size_t nitems, size_t size, int (*compar)(const void *, const void *)){
+    for (int i = 0; i < nitems; i++){
+        if(compar(key, base + i * size) == 0){
+            return base + i * size;
+        }
+    }
+    return NULL;
 }
