@@ -41,7 +41,7 @@ int main(){
     for(int i = 0; i < 10; i++){
         printCars(&Cars[i]);
     }
-
+    return 0;
 }
 
 void randomModel(char* name){
