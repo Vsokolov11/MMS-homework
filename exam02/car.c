@@ -37,7 +37,7 @@ int main(){
         Cars[i].max_speed = randint(190, 280);
         Cars[i].price = randomPrice(10000,50000);
     }
-    qsort(Cars, 10, sizeof(Car), compareModelASC);
+    qsort(Cars, 10, sizeof(Car), getComparator(2));
     for(int i = 0; i < 10; i++){
         printCars(&Cars[i]);
     }
@@ -105,5 +105,8 @@ int comparePriceDESC(const void* car1, const void* car2){
     return c1->price-c2->price;
 }
 int (*getComparator(int n))(const void*, const void*){
-
+    int* arr[6] = {compareMaxSpeedASC, compareMaxSpeedDESC,compareModelASC,compareModelDESC,comparePriceASC,comparePriceDESC};
+    int (*a)(const void *, const void *);
+    a = arr[n];
+    return a;
 }
