@@ -63,7 +63,7 @@ int main(){
     
     listFree(&booklist);
     listFree(&bookcpy);
-    //fclose(fptr);
+    fclose(fptr);
 
     return 0;
 }
