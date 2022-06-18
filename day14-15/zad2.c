@@ -34,13 +34,6 @@ int main(){
     char namein[15];
     printf("Enter the name of the input file: ");
     scanf("%s", namein);
-
-
-    char nameout[15];
-    printf("Enter the name of the input file: ");
-
-
-    scanf("%s", nameout);
     fptr = fopen(namein, "r+");
     fread(books, sizeof(books[0]), COUNT, fptr);
     fclose(fptr);
@@ -54,15 +47,18 @@ int main(){
         printf("Price:%6.2lf\n", books[i].price);
     } 
     putchar('\n');putchar('\n');
+    char nameout[15];
+    printf("Enter the name of the output file: ");
+    scanf("%s", nameout);
     mergeSort(&booklist, compareBooksTitleASC);
-    fptr = fopen(nameout, "r+");
+    print_booklist(booklist);
+    fptr = fopen(nameout, "w");
     while (bookcpy != NULL)
     {
         fwrite(bookcpy, sizeof(bookcpy), COUNT, fptr);
         bookcpy = bookcpy->next;
     }
-    fclose(fptr);
-    print_booklist(booklist);
+    
 
     listFree(&booklist);
     listFree(&bookcpy);
