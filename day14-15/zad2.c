@@ -55,7 +55,7 @@ int main(){
     fptr = fopen(nameout, "w");
     while (bookcpy != NULL)
     {
-        fwrite(bookcpy, sizeof(bookcpy), COUNT, fptr);
+        fwrite(&bookcpy, sizeof(bookcpy), 1, fptr);
         bookcpy = bookcpy->next;
     }
     

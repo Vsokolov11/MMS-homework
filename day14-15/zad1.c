@@ -63,7 +63,7 @@ void randomName(char* name){
     name[index] = '\0';
 }
 void randomTitle(char* title){
-    int n = randint(10, 20);
+    int n = randint(10, 19);
     unsigned index = 0;
     title[index++] = randint('A', 'Z');
     for (int i = 0; i < n; i++){
