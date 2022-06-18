@@ -30,7 +30,7 @@ int main(){
     FILE* fptr;
     Book books[COUNT];
     Node* booklist = NULL;
-    Node* bookcpy = copyList(booklist);
+
     char namein[15];
     printf("Enter the name of the input file: ");
     scanf("%s", namein);
@@ -52,12 +52,12 @@ int main(){
     char nameout[15];
     printf("Enter the name of the output file: ");
     scanf("%s", nameout);
-    
-    print_booklist(booklist);
+    Node* bookcpy = copyList(booklist);
+    print_booklist(bookcpy);
     fptr = fopen(nameout, "w");
     while (bookcpy != NULL)
     {
-        fwrite(bookcpy, sizeof(bookcpy), 1, fptr);
+        fwrite(bookcpy, sizeof(bookcpy), 4, fptr);
         bookcpy = bookcpy->next;
     }
     
@@ -90,7 +90,7 @@ void print_booklist(Node* list){
 int compareBooksTitleASC(Book bp1,Book bp2){
     Book b1 = bp1;
     Book b2 = bp2;
-    return strcmp(b1.author, b2.author);
+    return strcmp(b1.title, b2.title);
 }
 Node* sortedMerge(Node* listA, Node* listB, int(*cmp)(Book, Book)){
     Node* sorted = NULL;
