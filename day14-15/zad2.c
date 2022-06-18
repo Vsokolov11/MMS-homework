@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
 #define COUNT 5
 
@@ -18,24 +19,32 @@ typedef struct node{
 
 void push(Node**, Book);
 void print_booklist(Node*);
-int compareBooksTitleASC(Book*,Book*);
+int compareBooksTitleASC(Book,Book);
 Node* sortedMerge(Node*, Node*, int(*)(Book, Book));
 void frontBackSplit(Node*, Node**, Node**);
-void mergeSort(Node**, int(*)(int, int));
-
-
+void mergeSort(Node**, int(*)(Book, Book));
+void listFree(Node**);
+Node* copyList(Node*);
 
 int main(){
     FILE* fptr;
     Book books[COUNT];
     Node* booklist = NULL;
-    
-    char name[15];
-    scanf("%s", name);
-    
-    fptr = fopen(name, "r+");
+    Node* bookcpy = copyList(booklist);
+    char namein[15];
+    printf("Enter the name of the input file: ");
+    scanf("%s", namein);
+
+
+    char nameout[15];
+    printf("Enter the name of the input file: ");
+
+
+    scanf("%s", nameout);
+    fptr = fopen(namein, "r+");
     fread(books, sizeof(books[0]), COUNT, fptr);
     fclose(fptr);
+
     for (size_t i = 0; i < COUNT; i++)
     {
         push(&booklist, books[i]);
@@ -45,9 +54,18 @@ int main(){
         printf("Price:%6.2lf\n", books[i].price);
     } 
     putchar('\n');putchar('\n');
-
+    mergeSort(&booklist, compareBooksTitleASC);
+    fptr = fopen(nameout, "r+");
+    while (bookcpy != NULL)
+    {
+        fwrite(bookcpy, sizeof(bookcpy), COUNT, fptr);
+        bookcpy = bookcpy->next;
+    }
+    fclose(fptr);
     print_booklist(booklist);
-    
+
+    listFree(&booklist);
+    listFree(&bookcpy);
 }
 
 void push(Node** list, Book book){
@@ -69,12 +87,10 @@ void print_booklist(Node* list){
     }
     putchar('\n');
 }
-int compareBooksTitleASC(Book* b1,Book* b2){
-    while (res = 0)
-    {
-        /* code */
-    }
-    
+int compareBooksTitleASC(Book bp1,Book bp2){
+    Book b1 = bp1;
+    Book b2 = bp2;
+    return strcmp(b1.author, b2.author);
 }
 Node* sortedMerge(Node* listA, Node* listB, int(*cmp)(Book, Book)){
     Node* sorted = NULL;
@@ -84,7 +100,9 @@ Node* sortedMerge(Node* listA, Node* listB, int(*cmp)(Book, Book)){
     if (listB == NULL){
         return listA;
     }
-    if (cmp(listA->book, listB->book) > 0){
+    Book b1 = listA->book;
+    Book b2 = listB->book;
+    if (cmp(b1, b2) > 0){
         sorted = listA;
         sorted->next = sortedMerge(listA->next, listB, cmp);
     } else {
@@ -110,7 +128,7 @@ void frontBackSplit(Node* list, Node** front, Node** back){
     slow->next = NULL;
 }
 
-void mergeSort(Node** list, int(*cmp)(int, int)){
+void mergeSort(Node** list, int(*cmp)(Book, Book)){
     if (*list == NULL || (*list)->next == NULL){
         return;
     }
@@ -119,4 +137,24 @@ void mergeSort(Node** list, int(*cmp)(int, int)){
     mergeSort(&front, cmp);
     mergeSort(&back, cmp);
     *list = sortedMerge(front, back, cmp);
+}
+
+void listFree(Node** list){
+    Node *current = *list, *prev;
+    while (current){
+        prev = current;
+        current = current->next;
+        free(prev);
+    }
+    *list = NULL;
+}
+
+Node* copyList(Node* list){
+    if (list == NULL){
+        return NULL;
+    }
+    Node* n = malloc(sizeof(Node));
+    n->book = list->book;
+    n->next = copyList(list->next);
+    return n;
 }
