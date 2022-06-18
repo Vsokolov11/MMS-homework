@@ -47,21 +47,25 @@ int main(){
         printf("Price:%6.2lf\n", books[i].price);
     } 
     putchar('\n');putchar('\n');
+    mergeSort(&booklist, compareBooksTitleASC);
+
     char nameout[15];
     printf("Enter the name of the output file: ");
     scanf("%s", nameout);
-    mergeSort(&booklist, compareBooksTitleASC);
+    
     print_booklist(booklist);
     fptr = fopen(nameout, "w");
     while (bookcpy != NULL)
     {
-        fwrite(&bookcpy, sizeof(bookcpy), 1, fptr);
+        fwrite(bookcpy, sizeof(bookcpy), 1, fptr);
         bookcpy = bookcpy->next;
     }
     
-
     listFree(&booklist);
     listFree(&bookcpy);
+    //fclose(fptr);
+
+    return 0;
 }
 
 void push(Node** list, Book book){

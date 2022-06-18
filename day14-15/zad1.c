@@ -38,7 +38,7 @@ int main(){
         printf("  Pages:%5d", b_arr[i].pages);
         printf("  Price:%6.2lf ", b_arr[i].price);
         putchar('\n');
-        fwrite(&b_arr[i], sizeof(b_arr), COUNT, fptr);
+        fwrite(&b_arr[i], sizeof(b_arr), 1, fptr);
     }
     fclose(fptr);
     return 0;
