@@ -24,6 +24,10 @@ void push(node_t** , Rect);
 void listFree(node_t**);
 double dblrand(double, double);
 double areaRects(node_t*);
+void printAreaRects(node_t*);
+double areaRect(node_t*);
+void filterRecs(node_t**,double, double);
+void deleteNth(node_t**, size_t);
 
 int main(){
     srand(time(NULL));
@@ -40,7 +44,7 @@ int main(){
     printf("The sum of areas is: %.3lf\n", areaRects(rectlist));
     printf("Areas before filter:\n");
     printAreaRects(rectlist);
-    filterRecs(rectlist, 30.5, 33.1);
+    filterRecs(&rectlist, 20.5, 39.1);
     printf("Areas after filter:\n");
     printAreaRects(rectlist);
 }
@@ -118,11 +122,17 @@ double areaRect(node_t* list){
 }
 void filterRecs(node_t** list,double min, double max){
     int n = 0;
-    while (list != NULL)
-    {
-        *list = (*list)->next;
-        n++;
+    node_t* listA = *list;
+    if(listA == NULL){
+        return;
     }
+    else{
+        if(areaRect(listA) < min || areaRect(listA) > max){
+            deleteNth(list, n);
+        }
+    }
+    listA = listA->next;
+    n++;
 }
 
 void deleteNth(node_t** list, size_t n){
