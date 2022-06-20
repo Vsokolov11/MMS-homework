@@ -44,7 +44,7 @@ int main(){
     printf("The sum of areas is: %.3lf\n", areaRects(rectlist));
     printf("Areas before filter:\n");
     printAreaRects(rectlist);
-    filterRecs(&rectlist, 20.5, 39.1);
+    filterRecs(&rectlist, 25.5, 40.5);
     printf("Areas after filter:\n");
     printAreaRects(rectlist);
 }
@@ -119,22 +119,22 @@ double areaRect(node_t* list){
     double sidea = fabs(ax-bx);
     double sideb = fabs(ay-by);
     area = sidea * sideb;
+    return area;
 }
 void filterRecs(node_t** list,double min, double max){
     int n = 0;
     node_t* listA = *list;
-    if(listA == NULL){
-        return;
-    }
-    else{
-        if(areaRect(listA) < min || areaRect(listA) > max){
+    while (listA !=NULL)
+    {
+        double area = areaRect(listA);
+        if(area > min && area < max){
             deleteNth(list, n);
+            printf("Areas to be deleted: %lf\n", area);
         }
+        n++;
+        listA = listA->next;
     }
-    listA = listA->next;
-    n++;
 }
-
 void deleteNth(node_t** list, size_t n){
     if (*list == NULL){
         return;
