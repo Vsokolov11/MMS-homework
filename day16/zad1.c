@@ -6,20 +6,17 @@
 
 
 int main(int argc, char *argv[]){
-
-    FILE* fp;
-    if(!strcmp(argv[1], "cat"))
-    {
+    int c;
+    if(!strcmp(argv[1], "cat")){
         if(NULL == argv[2]){
             while(read(STDIN_FILENO, &c, 1)){
                 write(STDOUT_FILENO, &c, 1);
             }
         }
         else{
-
             for (size_t i = 2; i <= argc - 1; i++)
             {
-                fr = open(argv[i], O_RDONLY);
+                int fr = open(argv[i], O_RDONLY);
                 if(-1 == fr){
                     perror("\nError while opening file: ");
                     return EXIT_FAILURE;
@@ -32,58 +29,85 @@ int main(int argc, char *argv[]){
         }
     }
     else if(!strcmp(argv[1], "head")){
-
-        fr = open(argv[4], O_RDONLY);
-
         if(!strcmp(argv[2], "-c")){
             int count = atoi(argv[3]);
-            for (size_t i = 0; i < count; i++)
-            {
+            int fr = open(argv[4], O_RDONLY);
+            if(-1 == fr){
+                perror("\nError while opening file: ");
+                return EXIT_FAILURE;
+            }
+            while(count > 0){
                 read(fr, &c, 1);
                 write(STDOUT_FILENO, &c, 1);
+                count--;
             }
+            close(fr);
         }
-
         if(!strcmp(argv[2], "-n")){
-            int count = atoi(argv[3]);
-            while (count > 0)
-            {
-                read(fr, &c, 1);
-                if(c==10)
-                {
-                    count--;
-                }
-                write(STDOUT_FILENO, &c, 1);
-                
+            int lines = atoi(argv[3]);
+            int fr = open(argv[4], O_RDONLY);
+            if(-1 == fr){
+                perror("\nError while opening file: ");
+                return EXIT_FAILURE;
             }
-        }
-
-        close(fr);
+            while(lines > 0){
+                read(fr, &c, 1);
+                write(STDOUT_FILENO, &c, 1);
+                if(c == '\n'){
+                    lines--;
+                }
+            }
+            close(fr);
+        }     
     }
     else if(!strcmp(argv[1], "tail")){
-
-        fp = fopen(argv[4], 'r');
-        
+        FILE* fptr;
+        fptr = fopen(argv[4], "r");
         if(!strcmp(argv[2], "-c")){
             int count = atoi(argv[3]);
-            printf("%d", count);
-            
-        }
-
-        if(!strcmp(argv[2], "-n")){
-            int count = atoi(argv[3]);
-            while (count > 0)
+            fseek(fptr, -count, SEEK_END);
+            while ((c = fgetc(fptr))!=EOF)
             {
-                fgetc(fp);           
+                putchar(c);
             }
-            
         }
+        if(!strcmp(argv[2], "-n")){
+            
+            int lines = atoi(argv[3]);
+            int allLines = 0;
 
-        fclose(fp);
-    }
-    else{
-        fprintf(stderr, "%s is not a real command...\n", argv[1]);
+            rewind(fptr);
+            while ((c = fgetc(fptr))!=EOF)
+            {
+                if(c=='\n'){
+                    allLines++;
+                }
+            }
+            //printf("%d", allLines);
 
-        return EXIT_FAILURE;
+            if(lines>allLines){
+                perror("No such line");
+                return EXIT_FAILURE;
+            }
+    
+            rewind(fptr);
+            int currline = 0;
+            int desLine = allLines - lines;
+            while (currline != desLine)
+            {
+                c = fgetc(fptr);
+                if(c=='\n'){
+                    currline++;
+                }
+            }
+            while ((c = fgetc(fptr))!=EOF)
+            {
+                putchar(c);
+            }
+        }
     }
+    else if(strcmp(argv[1], "ls")){
+
+    }
+
 }
