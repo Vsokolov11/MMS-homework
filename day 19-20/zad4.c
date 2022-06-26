@@ -6,6 +6,8 @@
 #include<string.h>
 #include<semaphore.h>
 #include<time.h>
+#include<signal.h>
+
 
 
 typedef enum prtype{
@@ -30,6 +32,8 @@ void rndCode(product*);
 void rndType(product*);
 double randdbl(double,double);
 
+
+void exitSig(int);
 
 sem_t semSup, semBuy;
 pthread_mutex_t mux;
@@ -87,12 +91,19 @@ void *buy(void *prod){
 int main(int argc, char **argv){
 
 
+    //SIGNAL HANDLER
+    signal(SIGINT, exitSig);
+
+    //SEEDING THE RAND
     srand(time(NULL));
+
     //SEMAPHORES
     sem_init(&semSup, 0, 0);
     sem_init(&semBuy, 0, 10);
+
     //MUTEX
     pthread_mutex_init(&mux, NULL);
+
     //SETUP
     int customers, suppliers;
     if(NULL == argv[1] || NULL == argv[2]){
@@ -105,6 +116,7 @@ int main(int argc, char **argv){
     }
 
     printf("%d  %d\n", customers, suppliers);
+
     //BARCODE -1 MEANS EMPTY
     for (size_t i = 0; i < 10; i++)
     {
@@ -147,6 +159,8 @@ int main(int argc, char **argv){
     //MUTEX
     pthread_mutex_destroy(&mux);
 
+    
+
     return EXIT_SUCCESS;
 }
 
@@ -155,4 +169,10 @@ double randdbl(double min, double max)
     double range = (max - min); 
     double div = RAND_MAX / range;
     return min + (rand() / div);
+}
+
+void exitSig(int sig){
+    printf("Saving results in a file...");
+    raise(SIGINT);
+    signal(SIGINT,SIG_DFL);
 }
