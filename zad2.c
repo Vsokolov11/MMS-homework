@@ -7,7 +7,7 @@
 int main(int argc, char **argv){
     
     int pipes[2];
-
+    int total = 0;
     if (pipe(pipes) == -1) {
       fprintf(stderr, "Unable to create pipe\n");
       return EXIT_FAILURE;
@@ -17,8 +17,6 @@ int main(int argc, char **argv){
         FILE* fptr;
         int pid = fork();
         if(0 == pid){
-            
-            
             if(NULL != fopen(argv[i], "r")){
                 fptr = fopen(argv[i], "r");
                 int n, totalCurr = 0;
@@ -35,19 +33,15 @@ int main(int argc, char **argv){
                 fprintf(stderr, "Error in file \"%s\"\n", argv[i]);
                 exit(0);
             }
-            exit(0);
-            
+                    exit(0);
         }
         else{
-            //exit(0);
+            int temp;
+            read(pipes[0], &temp, sizeof(total));
+            total += temp;
+            wait(NULL);
         }
-    }
-    int total = 0;
-    for (size_t i = 1; i < argc; i++){
-        int temp;
-        read(pipes[0], &temp, sizeof(total));
-        total += temp;
-        wait(NULL);
+
     }
     printf("TOTAL: %d\n", total);
     return EXIT_SUCCESS;
