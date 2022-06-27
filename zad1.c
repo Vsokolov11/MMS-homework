@@ -9,7 +9,7 @@
 
 typedef struct item{
     uint16_t numbmer;
-    char desc[200];
+    char desc[250];
     double weight;
     double price;
 
@@ -40,7 +40,7 @@ int main(){
     node_t *items = NULL;
     for(int i = 0; i < ITEMS_COUNT; i++){
         Item temp;
-        char desc[200];
+        char desc[250];
         rndDesc(desc);
 
         temp.numbmer = rand() % 65000;
